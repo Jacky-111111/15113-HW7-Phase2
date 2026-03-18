@@ -1,45 +1,44 @@
 # Pac-Man Pygame Prototype
 
 Received from Phase1 from https://github.com/CodingGenius14/15-113-Week-8.
-## How To Run
-
-1. Open a terminal in this project folder.
-2. Install dependencies:
-
-```bash
-pip install pygame
-```
-
-3. Run the program:
-
-```bash
-py preview_map.py # or python3 preview_map.py
-
-```
-
-## What The Program Currently Does
-
-- Draws a Pac-Man style maze map with pellets.
-- Draws a top HUD with score and high score text.
-- Draws a bottom HUD with lives shown as Pac-Man icons.
-- Lets the Pac-Man sprite move with arrow keys.
-- Prevents Pac-Man from moving through walls.
-- Spawns enemy sprites in the starting box.
-- Keeps all enemy sprites in the starting box for 3 seconds.
-- After 3 seconds, all enemy sprites exit the box and roam the maze randomly at a constant speed.
-- Prevents enemy sprites from re-entering the starting box while roaming.
-
-## Next Steps
-
-- Allow the Pac-Man sprite to get points as it moves and collects the white dots.
-- As Pac-Man collects white dots, those dots should disappear and the points should increase.
-- If an enemy sprite hits Pac-Man, Pac-Man loses 1 life.
-- If Pac-Man runs out of 3 lives, the game is over.
-- If Pac-Man captures the big circles, then for 8 seconds Pac-Man should be able to kill enemy sprites for extra points.
-- When an enemy sprite is killed in that state, it should return to the starting box and then exit again after 3 seconds.
-- When Pac-Man gets a big circle, enemy sprites should turn blue.
-
-——————————————————————————end of received from Phase1
+> ## How To Run
+>
+> 1. Open a terminal in this project folder.
+> 2. Install dependencies:
+>
+> ```bash
+> pip install pygame
+> ```
+>
+> 3. Run the program:
+>
+> ```bash
+> py preview_map.py # or python3 preview_map.py
+> ```
+>
+> ## What The Program Currently Does
+>
+> - Draws a Pac-Man style maze map with pellets.
+> - Draws a top HUD with score and high score text.
+> - Draws a bottom HUD with lives shown as Pac-Man icons.
+> - Lets the Pac-Man sprite move with arrow keys.
+> - Prevents Pac-Man from moving through walls.
+> - Spawns enemy sprites in the starting box.
+> - Keeps all enemy sprites in the starting box for 3 seconds.
+> - After 3 seconds, all enemy sprites exit the box and roam the maze randomly at a constant speed.
+> - Prevents enemy sprites from re-entering the starting box while roaming.
+>
+> ## Next Steps
+>
+> - Allow the Pac-Man sprite to get points as it moves and collects the white dots.
+> - As Pac-Man collects white dots, those dots should disappear and the points should increase.
+> - If an enemy sprite hits Pac-Man, Pac-Man loses 1 life.
+> - If Pac-Man runs out of 3 lives, the game is over.
+> - If Pac-Man captures the big circles, then for 8 seconds Pac-Man should be able to kill enemy sprites for extra points.
+> - When an enemy sprite is killed in that state, it should return to the starting box and then exit again after 3 seconds.
+> - When Pac-Man gets a big circle, enemy sprites should turn blue.
+>
+> ——————————————————————————end of received from Phase1
 Start from Phase 2: 
 ## Improvement Roadmap (Append-Only)
 
@@ -223,3 +222,15 @@ This section documents the newly completed game-loop features without changing p
   - Click `CONTINUE` to close the popup and resume gameplay.
 - Added keyboard shortcut:
   - Press `C` (when popup is open) to continue gameplay.
+
+## Future Feature Suggestions (Append-Only)
+
+- Add classic tunnel wrap-around on left/right map edges for authentic Pac-Man movement.
+- Add ghost personality behaviors (chase/scatter targets per ghost) for deeper gameplay.
+- Add level progression with increasing ghost speed and shorter power duration each round.
+- Add combo scoring for consecutive ghost captures within one power-pellet window.
+- Add start menu, pause menu, and settings (volume, key rebinding, difficulty presets).
+- Add sound effects/music and simple animation polish (waka timing, ghost eyes direction, death animation).
+- Add persistent high-score save/load to local file.
+- Split game logic into modules (`entities`, `systems`, `ui`, `main`) to improve maintainability.
+- Add lightweight automated tests for collision, scoring, and state transitions.
