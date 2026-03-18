@@ -1,6 +1,8 @@
 # Pac-Man Pygame Prototype
 
-Received from Phase1 from https://github.com/CodingGenius14/15-113-Week-8.
+## Phase 1 Source
+
+Original Phase 1 baseline: https://github.com/CodingGenius14/15-113-Week-8
 > ## How To Run
 >
 > 1. Open a terminal in this project folder.
@@ -37,10 +39,10 @@ Received from Phase1 from https://github.com/CodingGenius14/15-113-Week-8.
 > - If Pac-Man captures the big circles, then for 8 seconds Pac-Man should be able to kill enemy sprites for extra points.
 > - When an enemy sprite is killed in that state, it should return to the starting box and then exit again after 3 seconds.
 > - When Pac-Man gets a big circle, enemy sprites should turn blue.
->
-> ——————————————————————————end of received from Phase1
-Start from Phase 2: 
-## Improvement Roadmap (Append-Only)
+
+## Phase 2 Updates
+
+## Improvement Roadmap  
 
 This section extends the current `Next Steps` with priority, implementation hints, and testable outcomes.
 
@@ -128,7 +130,7 @@ This section extends the current `Next Steps` with priority, implementation hint
 - Add a lightweight testable logic layer (pure functions for tile checks, scoring, collisions) so core rules can be validated without rendering.
 - Keep rendering and gameplay state updates decoupled to avoid regressions when adding new behaviors.
 
-## Movement Bug Fix Notes (Append-Only)
+## Movement Bug Fix Notes  
 
 Observed issue:
 - Pac-Man could occasionally clip into wall corners and appear stuck when turning near intersections.
@@ -146,7 +148,7 @@ Player-visible result:
 - Pac-Man now turns more reliably at intersections.
 - Pac-Man can traverse full tiles/corridors without randomly getting stuck in walls.
 
-## Movement Fix Follow-Up (Append-Only)
+## Movement Fix Follow-Up  
 
 Additional bug found:
 - A too-large center-snap threshold could snap Pac-Man back toward tile center every frame, making movement look stuck.
@@ -159,7 +161,7 @@ Result:
 - Pac-Man can move continuously through corridors again.
 - Turning assistance remains active without freezing movement.
 
-## Gameplay Completion Update (Append-Only)
+## Gameplay Completion Update  
 
 This section documents the newly completed game-loop features without changing prior content.
 
@@ -191,7 +193,7 @@ This section documents the newly completed game-loop features without changing p
 - Added a mutable pellet builder utility (`build_pellet_tiles`) to generate pellet tile sets from layout data.
 - Extended `draw_map(...)` to accept an optional pellet-tile set so consumed pellets disappear visually during gameplay.
 
-## Power Pellet Score Fix (Append-Only)
+## Power Pellet Score Fix  
 
 - Fixed power-pellet scoring so large pellets always award more points than normal pellets.
 - Updated scoring values:
@@ -201,7 +203,7 @@ This section documents the newly completed game-loop features without changing p
   - Added dedicated power-pellet tile tracking in gameplay state.
   - Pellet consumption now checks this dedicated set directly, ensuring power pellets never fall back to normal score.
 
-## Info Button and Pause Popup (Append-Only)
+## Info Button and Pause Popup  
 
 - Added an `INFO` button at the top HUD area.
 - Clicking `INFO` toggles an in-game help popup.
@@ -215,7 +217,7 @@ This section documents the newly completed game-loop features without changing p
   - `I` toggles popup open/close
   - `ESC` closes popup when open
 
-## Info Popup Layout and Continue Button (Append-Only)
+## Info Popup Layout and Continue Button  
 
 - Improved info popup text layout to prevent long guide lines from overflowing the panel.
 - Added a visible `CONTINUE` button inside the popup:
@@ -223,7 +225,7 @@ This section documents the newly completed game-loop features without changing p
 - Added keyboard shortcut:
   - Press `C` (when popup is open) to continue gameplay.
 
-## Future Feature Suggestions (Append-Only)
+## Future Feature Suggestions  
 
 - Add classic tunnel wrap-around on left/right map edges for authentic Pac-Man movement.
 - Add ghost personality behaviors (chase/scatter targets per ghost) for deeper gameplay.
