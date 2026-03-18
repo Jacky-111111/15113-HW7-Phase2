@@ -8,6 +8,8 @@ TILE_SIZE = 28
 WALL_COLOR = (0, 102, 255)
 PATH_COLOR = (0, 0, 0)
 PELLET_COLOR = (255, 235, 140)
+NORMAL_PELLET_TILE = "0"
+POWER_PELLET_TILE = "3"
 
 # Legend:
 # 1 = wall
@@ -54,6 +56,16 @@ MAP_WIDTH = COLS * TILE_SIZE
 MAP_HEIGHT = ROWS * TILE_SIZE
 
 
+def build_pellet_tiles() -> set[tuple[int, int]]:
+    """Return mutable pellet tile coordinates as (row, col)."""
+    pellet_tiles: set[tuple[int, int]] = set()
+    for row_index, row in enumerate(MAZE_LAYOUT):
+        for col_index, tile in enumerate(row):
+            if tile in (NORMAL_PELLET_TILE, POWER_PELLET_TILE):
+                pellet_tiles.add((row_index, col_index))
+    return pellet_tiles
+
+
 def tile_center(col: int, row: int, offset_x: int = 0, offset_y: int = 0) -> tuple[int, int]:
     """Return pixel center for a tile coordinate."""
     return (
@@ -62,7 +74,12 @@ def tile_center(col: int, row: int, offset_x: int = 0, offset_y: int = 0) -> tup
     )
 
 
-def draw_map(surface: pygame.Surface, offset_x: int = 0, offset_y: int = 0) -> None:
+def draw_map(
+    surface: pygame.Surface,
+    offset_x: int = 0,
+    offset_y: int = 0,
+    pellet_tiles: set[tuple[int, int]] | None = None,
+) -> None:
     """Draw walls, floor, and pellets based on MAZE_LAYOUT."""
     for row_index, row in enumerate(MAZE_LAYOUT):
         for col_index, tile in enumerate(row):
@@ -74,14 +91,21 @@ def draw_map(surface: pygame.Surface, offset_x: int = 0, offset_y: int = 0) -> N
                 pygame.draw.rect(surface, WALL_COLOR, cell_rect, border_radius=6)
             else:
                 pygame.draw.rect(surface, PATH_COLOR, cell_rect)
-                if tile == "0":
+                has_pellet = (
+                    (row_index, col_index) in pellet_tiles
+                    if pellet_tiles is not None
+                    else tile in (NORMAL_PELLET_TILE, POWER_PELLET_TILE)
+                )
+                if not has_pellet:
+                    continue
+                if tile == NORMAL_PELLET_TILE:
                     pygame.draw.circle(
                         surface,
                         PELLET_COLOR,
                         cell_rect.center,
                         max(2, TILE_SIZE // 8),
                     )
-                elif tile == "3":
+                elif tile == POWER_PELLET_TILE:
                     pygame.draw.circle(
                         surface,
                         PELLET_COLOR,
