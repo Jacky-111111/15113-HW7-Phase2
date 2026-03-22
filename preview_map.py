@@ -340,6 +340,19 @@ def pacman_direction_from_keys(keys: pygame.key.ScancodeWrapper) -> pygame.Vecto
     return DIR_NONE
 
 
+def direction_from_key(key: int) -> pygame.Vector2:
+    """Map arrow key constants to direction vectors."""
+    if key == pygame.K_LEFT:
+        return DIR_LEFT
+    if key == pygame.K_RIGHT:
+        return DIR_RIGHT
+    if key == pygame.K_UP:
+        return DIR_UP
+    if key == pygame.K_DOWN:
+        return DIR_DOWN
+    return DIR_NONE
+
+
 def map_cell_from_position(position: pygame.Vector2) -> tuple[int, int]:
     """Convert world position to maze (row, col)."""
     col = int(position.x) // TILE_SIZE
@@ -617,6 +630,15 @@ def draw_center_message(surface: pygame.Surface, title: str, subtitle: str) -> N
     )
 
 
+def draw_start_prompt(surface: pygame.Surface) -> None:
+    """Draw startup prompt that asks player to begin with arrow keys."""
+    draw_center_message(
+        surface,
+        "READY TO START?",
+        "Press Arrow Keys To Move And Start",
+    )
+
+
 def main() -> None:
     """Run the pygame loop for map preview and movement prototype."""
     pygame.init()
@@ -649,6 +671,7 @@ def main() -> None:
     is_game_over = False
     is_round_clear = False
     show_info_overlay = False
+    show_start_prompt = True
     pacman_is_moving = False
 
     running = True
@@ -660,6 +683,11 @@ def main() -> None:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+            if event.type == pygame.KEYDOWN and show_start_prompt:
+                start_direction = direction_from_key(event.key)
+                if start_direction != DIR_NONE:
+                    show_start_prompt = False
+                    buffered_direction = start_direction
             if event.type == pygame.KEYDOWN and event.key == pygame.K_i:
                 show_info_overlay = not show_info_overlay
             if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE and show_info_overlay:
@@ -698,8 +726,9 @@ def main() -> None:
                 is_game_over = False
                 is_round_clear = False
                 show_info_overlay = False
+                show_start_prompt = True
 
-        if not is_game_over and not is_round_clear and not show_info_overlay:
+        if not is_game_over and not is_round_clear and not show_info_overlay and not show_start_prompt:
             pressed = pygame.key.get_pressed()
             input_direction = pacman_direction_from_keys(pressed)
             if input_direction != DIR_NONE:
@@ -775,6 +804,8 @@ def main() -> None:
             draw_center_message(screen, "GAME OVER", "Press R to restart")
         elif is_round_clear:
             draw_center_message(screen, "YOU WIN!", "All pellets cleared - press R to play again")
+        elif show_start_prompt:
+            draw_start_prompt(screen)
         if show_info_overlay:
             draw_info_overlay(screen)
         pygame.display.flip()

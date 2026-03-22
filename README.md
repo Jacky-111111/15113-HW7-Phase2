@@ -225,6 +225,13 @@ This section documents the newly completed game-loop features without changing p
 - Added keyboard shortcut:
   - Press `C` (when popup is open) to continue gameplay.
 
+## Startup Arrow-Key Prompt (Append-Only)
+
+- Added a startup floating prompt shown when the game launches.
+- Prompt message instructs the player to press arrow keys to move and start.
+- Gameplay updates stay paused until an arrow key is pressed.
+- Pressing `R` now resets the game and brings this startup prompt back.
+
 ## Future Feature Suggestions  
 
 - Add classic tunnel wrap-around on left/right map edges for authentic Pac-Man movement.
