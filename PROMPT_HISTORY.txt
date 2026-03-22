@@ -1,0 +1,35 @@
+I used Cursor to open the repo downloaded from Phase1 classmate’s GitHub.
+I set the model to GPT-5.3 Codex.
+
+
+--------------------------------------------------------------------------------
+
+
+At first, I asked Cursor "Explain this program to me, and tell me how to locally run it." in Ask Mode.
+
+Then, I entered following prompts in Plan Mode and allowed Cursor to give its best response and edits: 
+
+1. Currently, it seems that when Pac-Man eats dots, they do not disappear, and no score changes.  
+Please fix this so that the game behaves like a complete Pac-Man game.  
+Also, document all changes in the README, but do not modify any of the original content; only add new sections.
+
+2. Currently, eating the larger yellow dots does not award more points than regular dots.  
+Please modify this behavior so that larger dots give higher scores.  
+Also, document this change in the README.
+
+3. Add an "Info" button at the top of the screen.  
+When clicked, it should open a pop-up window that pauses the game and displays instructions, including controls and credits.  
+Credits: "Vikram Oberai and Jack Yu. Made with help of AI."
+Also, document this feature in the README, ensuring that you only add to the existing content without modifying it.
+
+4. The Info button currently extends beyond the right boundary.  
+Please fix its layout so it fits properly within the UI.  
+Also, add a "Continue" button in the pop-up to resume the game. Document it in README.
+
+5. Currently, the Pac-Man game uses a fixed high score.  
+Should it be updated to dynamically track and reflect the actual highest score achieved across sessions?  
+Implement this feature. Document it in README.
+
+...
+
+When neccessary, I continued by giving more detailed instructions on specific features, UI designs, and bug fixes.
