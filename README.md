@@ -245,3 +245,16 @@ This section documents the newly completed game-loop features without changing p
 - During gameplay, when current score exceeds high score, the new value is saved immediately.
 - On game exit, high score is saved again to ensure the latest result is preserved.
 - If the high-score file is missing or contains invalid data, the game safely falls back to `0`.
+
+## Pac-Man Mouth Animation Update (Append-Only)
+
+- Added a continuous mouth open-close animation for the player Pac-Man sprite.
+- The mouth angle is now time-based and loops smoothly while the game is running.
+- Facing direction logic is unchanged; animation only affects mouth openness.
+- Bottom HUD life icons remain static (no behavior change to controls or HUD semantics).
+
+## Pac-Man Mouth Animation Behavior Adjustment (Append-Only)
+
+- Updated mouth animation behavior so open-close looping only plays while Pac-Man is moving.
+- When Pac-Man is idle (no actual movement), the mouth now stays at a fixed idle angle.
+- This keeps animation feedback tied directly to movement state.

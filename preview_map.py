@@ -11,6 +11,7 @@ Current behavior:
 from __future__ import annotations
 
 from dataclasses import dataclass
+import math
 from pathlib import Path
 import random
 import sys
@@ -45,6 +46,10 @@ PACMAN_SPEED = 3
 GHOST_SPEED = 2
 GHOST_RELEASE_DELAY_SEC = 3.0
 POWER_MODE_DURATION_SEC = 8.0
+MOUTH_MIN_ANGLE_DEG = 6.0
+MOUTH_MAX_ANGLE_DEG = 42.0
+MOUTH_CYCLES_PER_SEC = 5.5
+IDLE_MOUTH_ANGLE_DEG = MOUTH_MIN_ANGLE_DEG
 
 # Scoring
 NORMAL_PELLET_POINTS = 10
@@ -94,6 +99,12 @@ def save_high_score(high_score: int, path: Path = HIGH_SCORE_FILE) -> None:
         path.write_text(f"{max(0, int(high_score))}\n", encoding="utf-8")
     except OSError:
         pass
+
+
+def animated_mouth_angle(elapsed_sec: float) -> float:
+    """Return time-based Pac-Man mouth angle for open-close animation."""
+    wave = (math.sin(2 * math.pi * MOUTH_CYCLES_PER_SEC * elapsed_sec) + 1.0) / 2.0
+    return MOUTH_MIN_ANGLE_DEG + wave * (MOUTH_MAX_ANGLE_DEG - MOUTH_MIN_ANGLE_DEG)
 
 
 def draw_pacman(
@@ -638,11 +649,13 @@ def main() -> None:
     is_game_over = False
     is_round_clear = False
     show_info_overlay = False
+    pacman_is_moving = False
 
     running = True
     while running:
         dt = clock.tick(60) / 1000.0
         elapsed_sec += dt
+        pacman_is_moving = False
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -692,6 +705,7 @@ def main() -> None:
             if input_direction != DIR_NONE:
                 buffered_direction = input_direction
 
+            previous_pacman_position = pygame.Vector2(pacman_position)
             pacman_position, pacman_direction = update_pacman_position(
                 pacman_position,
                 pacman_direction,
@@ -699,6 +713,7 @@ def main() -> None:
                 pacman_radius,
                 PACMAN_SPEED,
             )
+            pacman_is_moving = pacman_position.distance_to(previous_pacman_position) > 0.01
             if pacman_direction != DIR_NONE:
                 last_facing = pacman_direction
 
@@ -751,7 +766,9 @@ def main() -> None:
             screen,
             (int(pacman_position.x), int(pacman_position.y)),
             pacman_radius,
-            mouth_angle_deg=35,
+            mouth_angle_deg=(
+                animated_mouth_angle(elapsed_sec) if pacman_is_moving else IDLE_MOUTH_ANGLE_DEG
+            ),
             direction=direction_to_mouth_angle(last_facing),
         )
         if is_game_over:
