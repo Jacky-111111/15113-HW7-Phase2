@@ -163,8 +163,6 @@ Result:
 
 ## Gameplay Completion Update  
 
-This section documents the newly completed game-loop features without changing prior content.
-
 ### Completed in `preview_map.py`
 
 - Pellet state is now mutable during play:
@@ -225,26 +223,14 @@ This section documents the newly completed game-loop features without changing p
 - Added keyboard shortcut:
   - Press `C` (when popup is open) to continue gameplay.
 
-## Startup Arrow-Key Prompt (Append-Only)
+## Startup Arrow-Key Prompt
 
 - Added a startup floating prompt shown when the game launches.
 - Prompt message instructs the player to press arrow keys to move and start.
 - Gameplay updates stay paused until an arrow key is pressed.
 - Pressing `R` now resets the game and brings this startup prompt back.
 
-## Future Feature Suggestions  
-
-- Add classic tunnel wrap-around on left/right map edges for authentic Pac-Man movement.
-- Add ghost personality behaviors (chase/scatter targets per ghost) for deeper gameplay.
-- Add level progression with increasing ghost speed and shorter power duration each round.
-- Add combo scoring for consecutive ghost captures within one power-pellet window.
-- Add start menu, pause menu, and settings (volume, key rebinding, difficulty presets).
-- Add sound effects/music and simple animation polish (waka timing, ghost eyes direction, death animation).
-- Add persistent high-score save/load to local file.
-- Split game logic into modules (`entities`, `systems`, `ui`, `main`) to improve maintainability.
-- Add lightweight automated tests for collision, scoring, and state transitions.
-
-## High Score Persistence Update (Append-Only)
+## High Score Persistence Update
 
 - Replaced fixed high score with persistent local save/load behavior.
 - On game startup, the program now reads the previous best score from a local file:
@@ -253,15 +239,44 @@ This section documents the newly completed game-loop features without changing p
 - On game exit, high score is saved again to ensure the latest result is preserved.
 - If the high-score file is missing or contains invalid data, the game safely falls back to `0`.
 
-## Pac-Man Mouth Animation Update (Append-Only)
+## Pac-Man Mouth Animation Update
 
 - Added a continuous mouth open-close animation for the player Pac-Man sprite.
 - The mouth angle is now time-based and loops smoothly while the game is running.
 - Facing direction logic is unchanged; animation only affects mouth openness.
 - Bottom HUD life icons remain static (no behavior change to controls or HUD semantics).
 
-## Pac-Man Mouth Animation Behavior Adjustment (Append-Only)
+## Pac-Man Mouth Animation Behavior Adjustment
 
 - Updated mouth animation behavior so open-close looping only plays while Pac-Man is moving.
 - When Pac-Man is idle (no actual movement), the mouth now stays at a fixed idle angle.
 - This keeps animation feedback tied directly to movement state.
+
+## Future Upgrade Suggestions
+
+### Gameplay Depth
+
+- Add classic tunnel wrap-around on left/right map edges for authentic Pac-Man movement.
+- Implement full ghost AI personalities (Blinky/Pinky/Inky/Clyde) with chase/scatter cycles.
+- Add multi-level progression with increasing difficulty and intermission transitions.
+- Add fruit bonus spawns with timed appearance windows and score rewards.
+- Add frightened-mode combo scaling (`200/400/800/1600`) and on-screen combo feedback.
+
+### Player Experience
+
+- Add a start menu and in-game settings panel (volume, control remap, difficulty presets).
+- Add richer UX feedback: floating score popups, hit flash, and smoother death/restart transitions.
+- Add sound effects/music and animation polish (waka timing, ghost eye direction, death animation).
+- Add accessibility options: color-blind-friendly ghost palettes and larger UI/text mode.
+
+### Technical Quality
+
+- Refactor into modules (`entities`, `systems`, `render`, `state`) to reduce coupling in `preview_map.py`.
+- Add unit tests for collision, scoring, pellet consumption, and state transitions.
+- Add deterministic replay/debug mode (seeded ghost randomness + event logging) for easier bug reproduction.
+
+### Performance and Portability
+
+- Add optional frame interpolation and capped update loop tuning for lower-end hardware.
+- Add packaged desktop builds (PyInstaller) with asset bundling and one-click launch scripts.
+- Add CI checks for lint/syntax/tests to prevent regressions before merge.
