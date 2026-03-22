@@ -2,7 +2,7 @@
 
 ## Phase 1 Source
 
-Original Phase 1 baseline: https://github.com/CodingGenius14/15-113-Week-8
+Original Phase 1: https://github.com/CodingGenius14/15-113-Week-8
 > ## How To Run
 >
 > 1. Open a terminal in this project folder.
@@ -15,7 +15,7 @@ Original Phase 1 baseline: https://github.com/CodingGenius14/15-113-Week-8
 > 3. Run the program:
 >
 > ```bash
-> py preview_map.py # or python3 preview_map.py
+> py preview_map.py # or try python3 preview_map.py
 > ```
 >
 > ## What The Program Currently Does
@@ -236,3 +236,12 @@ This section documents the newly completed game-loop features without changing p
 - Add persistent high-score save/load to local file.
 - Split game logic into modules (`entities`, `systems`, `ui`, `main`) to improve maintainability.
 - Add lightweight automated tests for collision, scoring, and state transitions.
+
+## High Score Persistence Update (Append-Only)
+
+- Replaced fixed high score with persistent local save/load behavior.
+- On game startup, the program now reads the previous best score from a local file:
+  - `high_score.txt` (same folder as `preview_map.py`)
+- During gameplay, when current score exceeds high score, the new value is saved immediately.
+- On game exit, high score is saved again to ensure the latest result is preserved.
+- If the high-score file is missing or contains invalid data, the game safely falls back to `0`.

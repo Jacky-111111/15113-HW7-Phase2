@@ -11,6 +11,7 @@ Current behavior:
 from __future__ import annotations
 
 from dataclasses import dataclass
+from pathlib import Path
 import random
 import sys
 
@@ -51,6 +52,7 @@ POWER_PELLET_POINTS = 100
 GHOST_EAT_POINTS = 200
 HIT_PENALTY_POINTS = 200
 START_LIVES = 3
+HIGH_SCORE_FILE = Path(__file__).with_name("high_score.txt")
 
 # Movement vectors
 DIR_NONE = pygame.Vector2(0, 0)
@@ -75,6 +77,23 @@ class Ghost:
     direction: pygame.Vector2
     state: str  # in_box, exiting, roaming
     release_time: float
+
+
+def load_high_score(path: Path = HIGH_SCORE_FILE) -> int:
+    """Load high score from local file; return 0 when missing/invalid."""
+    try:
+        raw = path.read_text(encoding="utf-8").strip()
+        return max(0, int(raw)) if raw else 0
+    except (OSError, ValueError):
+        return 0
+
+
+def save_high_score(high_score: int, path: Path = HIGH_SCORE_FILE) -> None:
+    """Persist high score to local file, silently ignoring IO errors."""
+    try:
+        path.write_text(f"{max(0, int(high_score))}\n", encoding="utf-8")
+    except OSError:
+        pass
 
 
 def draw_pacman(
@@ -595,7 +614,7 @@ def main() -> None:
     clock = pygame.time.Clock()
 
     score = 0
-    high_score = 12000
+    high_score = load_high_score()
     lives = START_LIVES
 
     pacman_radius = max(10, TILE_SIZE // 2 - 4)
@@ -690,7 +709,9 @@ def main() -> None:
             )
             if gained_points:
                 score += gained_points
-                high_score = max(high_score, score)
+                if score > high_score:
+                    high_score = score
+                    save_high_score(high_score)
             if got_power_pellet:
                 power_mode_until = elapsed_sec + POWER_MODE_DURATION_SEC
             if not pellet_tiles:
@@ -704,7 +725,9 @@ def main() -> None:
                 if pacman_position.distance_to(ghost.position) <= (pacman_radius + ghost_radius - 4):
                     if power_mode_active:
                         score += GHOST_EAT_POINTS
-                        high_score = max(high_score, score)
+                        if score > high_score:
+                            high_score = score
+                            save_high_score(high_score)
                         send_ghost_back_to_box(ghost, elapsed_sec)
                     else:
                         lives -= 1
@@ -739,6 +762,7 @@ def main() -> None:
             draw_info_overlay(screen)
         pygame.display.flip()
 
+    save_high_score(high_score)
     pygame.quit()
     sys.exit()
 
