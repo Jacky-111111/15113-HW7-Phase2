@@ -2,7 +2,7 @@
 
 ## Phase 1 Source
 
-Original Phase 1: https://github.com/CodingGenius14/15-113-Week-8
+Phase 1 from: https://github.com/CodingGenius14/15-113-Week-8
 > ## How To Run
 >
 > 1. Open a terminal in this project folder.
